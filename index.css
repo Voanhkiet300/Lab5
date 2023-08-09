@@ -1,0 +1,52 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navright {
+  display: flex;
+}
+
+.search-form {
+  margin-right: 20px;
+}
+
+.nav-btn {
+  margin: 0 3px;
+}
+
+form {
+  display: flex;
+}
+
+.product-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.product-list #products {
+  width: 20%;
+  padding: 16px;
+}
+
+.product-list #products img {
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 3/3;
+}
+
+.product-list #products button {
+  width: 100%;
+  text-align: center;
+  padding: 4px 0;
+  background-color: transparent;
+  border: 1px solid #000;
+}
+.ShoppingList {
+  display: flex;
+  flex-direction: column;
+}
+.inputContainer {
+  margin-top: 10px;
+}

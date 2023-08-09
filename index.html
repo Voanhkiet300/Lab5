@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navleft">
+      <a class="navbar-brand" href="#">MinX store</a>
+    </div>
+    <div class="navright">
+      <form class="form-inline my-2 my-lg-0 search-form">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <a class="btn btn-primary nav-btn" href="form.html" role="button">Login</a>
+      <a class="btn btn-outline-primary nav-btn" href="register.html" role="button">Register</a>
+    </div>
+  </nav>
+  <main>
+    <div class="product-list" id="products">
+      <div id="products">
+        <img src="shirt.jpg" alt="" />
+        <h4>Lorem ipsum dolor sit amet.</h4>
+        <p>$100.000</p>
+        <button>Add to cart</button>
+      </div>
+    </div>
+    <form name="ShoppingList" class="ShoppingList">
+      <fieldset>
+        <Legend>Shopping cart</legend>
+        <Label>Item: <input id="name" type="text" name="name" "></label>
+        <Label>Quantity: <input id=" data" type=" text" name="data"></label>
+        <div class="inputContainer">
+          <input type="button" value="Save" onclick="SaveItem()" />
+          <input type="button" value="Update" onclick="ModifyItem()" />
+          <input type="button" value="delete" onclick="Removeltem()" />
+          <input type="button" value="Clear" onclick="ClearAll()" />
+        </div>
+      </fieldset>
+      <div id="items_table">
+        <h2>Shopping List</h2>
+        <table id="list"></table>
+      </div>
+    </form>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script>
+    let products = [
+      {
+        img: 'shirt.jpg',
+        name: 'shirt',
+        price: 20
+      },
+      {
+        img: 'pant.webp',
+        name: 'pant',
+        price: 25
+      },
+      {
+        img: 'shirt.jpg',
+        name: 'shirt2',
+        price: 30
+      },
+    ]
+    const productElememt = document.getElementById('products')
+    console.log(productElememt);
+
+    var productHTML = ''
+    for (let product of products) {
+      productHTML += `<div id="products">
+        <img src="${product.img}" alt="" />
+        <h4>${product.name}</h4>
+        <p>${product.price}$</p>
+        <button>Add to cart</button>
+      </div>`;
+    }
+    productElememt.innerHTML = productHTML
+
+
+
+
+    function CheckBrowser() {
+      if ('localStorage' in window && window['localStorage'] !== null) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    var dataElement = document.getElementById('data')
+    function resetdata() {
+      dataElement.value = ''
+    }
+    function doShowAll() {
+      if (CheckBrowser()) {
+        var key = "";
+        var list = "";
+        var i = 0;
+        for (i = 0; i <= localStorage.length - 1; i++) {
+          key = localStorage.key(i);
+          list += `<table id="list">
+          <h4>item: ${localStorage.key(i)}</h4>
+          <h4>Quantity: ${localStorage.getItem(key)}</h4>
+          <table>
+          <hr>`;
+        }
+        if (list == `<table id="list">
+          <h4>item: </h4>
+          <h4>Quantity: </h4>
+          <table>
+          <hr>`) {
+          list = `<table id="list">
+          <h4>item: empty</h4>
+          <h4>Quantity: empty</h4>
+          <table>
+          <hr>`;
+        }
+        document.getElementById('list').innerHTML = list;
+      } else {
+        alert('Cannot save shopping list as your browser does not support HTML 5');
+      }
+    }
+    function SaveItem() {
+      var name = document.forms.ShoppingList.name.value;
+      var data = document.forms.ShoppingList.data.value;
+      localStorage.setItem(name, data);
+      doShowAll();
+    }
+    function ModifyItem() {
+      var name1 = document.forms.ShoppingList.name.value;
+      var data1 = document.forms.ShoppingList.data.value;
+      if (localStorage.getItem(name1) != null) {
+        localStorage.setItem(name1, data1);
+        document.forms.ShoppingList.data.value = ''
+        localStorage.removeItem(name);
+      }
+      doShowAll();
+    }
+    function Removeltem() {
+      var name = document.forms.ShoppingList.name.value;
+      var data = document.forms.ShoppingList.data.value;
+      var data2 = localStorage.getItem(name)
+      data = data2 - data
+      if (data <= 0) {
+        localStorage.removeItem(name)
+      } else {
+        localStorage.setItem(name, data)
+      }
+      doShowAll();
+    }
+    function ClearAll() {
+      localStorage.clear()
+      doShowAll();
+    }
+    doShowAll()
+  </script>
+</body>
+
+</html>
